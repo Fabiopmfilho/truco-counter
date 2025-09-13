@@ -35,9 +35,6 @@ export default function Truco() {
     setUsVictories((prev) => prev + 1);
     resetPoints();
     setWinner("us");
-    // Alert.alert("Vitória!", "NÓS ganhamos a partida 🏆");
-    console.log("Vitória para NÓS");
-
     return 0;
   };
 
@@ -45,19 +42,15 @@ export default function Truco() {
     setTheyVictories((prev) => prev + 1);
     resetPoints();
     setWinner("they");
-    // Alert.alert("Vitória!", "ELES ganharam a partida 🏆");
-    console.log("Vitória para ELES");
-
     return 0;
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <ImageBackground
-        source={require("../../assets/images/background.jpg")}
-        style={styles.background}
-        resizeMode="cover"
-      ></ImageBackground>
+    <ImageBackground
+      source={require("../../assets/images/background.jpg")}
+      style={styles.background}
+      contentFit="cover"
+    >
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Conta Tento!!</Text>
@@ -68,21 +61,18 @@ export default function Truco() {
         {/* Team "Nós" */}
         <View style={styles.teamContainer}>
           <Text style={styles.teamLabel}>NÓS</Text>
-
-          {/* Score Display */}
           <Text
-            style={[styles.scoreDisplay, usCount === 14 && { color: "red" }]}
+            style={[
+              styles.scoreDisplay,
+              usCount === 14 && { color: "#FF4444" },
+            ]}
           >
             {usCount}
           </Text>
-
-          {/* Trophies indicator */}
           <View style={styles.trophyContainer}>
             <Text style={styles.trophy}>🏆</Text>
             <Text style={styles.trophyCount}>{usVictories}</Text>
           </View>
-
-          {/* Control buttons */}
           <View style={styles.controlsContainer}>
             <TouchableOpacity
               style={styles.incrementButton}
@@ -90,7 +80,6 @@ export default function Truco() {
             >
               <Text style={styles.buttonText}>+ 1</Text>
             </TouchableOpacity>
-
             <TouchableOpacity
               style={styles.decrementButton}
               onPress={decrementUs}
@@ -103,21 +92,18 @@ export default function Truco() {
         {/* Team "Eles" */}
         <View style={styles.teamContainer}>
           <Text style={styles.teamLabel}>ELES</Text>
-
-          {/* Score Display */}
           <Text
-            style={[styles.scoreDisplay, theyCount === 14 && { color: "red" }]}
+            style={[
+              styles.scoreDisplay,
+              theyCount === 14 && { color: "#FF4444" },
+            ]}
           >
             {theyCount}
           </Text>
-
-          {/* Trophies indicator */}
           <View style={styles.trophyContainer}>
             <Text style={styles.trophyCount}>{theyVictories}</Text>
             <Text style={styles.trophy}>🏆</Text>
           </View>
-
-          {/* Control buttons */}
           <View style={styles.controlsContainer}>
             <TouchableOpacity
               style={styles.incrementButton}
@@ -125,7 +111,6 @@ export default function Truco() {
             >
               <Text style={styles.buttonText}>+ 1</Text>
             </TouchableOpacity>
-
             <TouchableOpacity
               style={styles.decrementButton}
               onPress={decrementThey}
@@ -141,27 +126,24 @@ export default function Truco() {
         <TouchableOpacity style={styles.resetButton} onPress={resetPoints}>
           <Text style={styles.resetButtonText}>ZERAR PONTOS</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.resetButton} onPress={resetVictories}>
           <Text style={styles.resetButtonText}>ZERAR VITÓRIAS</Text>
         </TouchableOpacity>
       </View>
-      {/* Chamando o ModalWinner */}
+
       <ModalWinner winner={winner} setWinner={setWinner} />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "#000000",
-    paddingTop: 50,
-    paddingHorizontal: 20,
-    justifyContent: "center",
-  },
   background: {
     flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "space-between",
+    paddingTop: 50,
+    paddingHorizontal: 20,
   },
   header: {
     alignItems: "center",
@@ -169,7 +151,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#FFFFFF",
-    fontSize: 18,
+    fontSize: 38,
     fontWeight: "bold",
     letterSpacing: 1,
   },
@@ -224,7 +206,6 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
   },
   buttonText: {
     color: "#FFFFFF",
@@ -246,6 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     paddingHorizontal: 20,
+    marginBottom: 30,
   },
   resetButton: {
     backgroundColor: "transparent",
