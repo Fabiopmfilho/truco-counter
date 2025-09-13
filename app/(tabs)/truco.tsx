@@ -1,4 +1,5 @@
 import ModalWinner from "@/components/Modal";
+import { ImageBackground } from "expo-image";
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -52,6 +53,11 @@ export default function Truco() {
 
   return (
     <View style={styles.mainContainer}>
+      <ImageBackground
+        source={require("../../assets/images/background.jpg")}
+        style={styles.background}
+        resizeMode="cover"
+      ></ImageBackground>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Conta Tento!!</Text>
@@ -153,6 +159,9 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 20,
     justifyContent: "center",
+  },
+  background: {
+    flex: 1,
   },
   header: {
     alignItems: "center",
