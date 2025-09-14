@@ -23,6 +23,8 @@ const MAPPING = {
   "chevron.right": "chevron-right",
   book: "book",
   "calculate.icon": "calculate",
+  "arrow-back": "arrow-back",
+  "arrow-forward": "arrow-forward",
 } as unknown as IconMapping;
 
 /**

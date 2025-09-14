@@ -1,75 +1,205 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from "react-native";
+import Carousel from "react-native-reanimated-carousel";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const { width } = Dimensions.get("window");
+
+const slides = [
+  {
+    id: "1",
+    title: "Bem-vindo ao Truco!",
+    desc: "Aprenda as regras básicas do jogo.",
+    suit: "♠️",
+    color: "#2c3e50",
+  },
+  {
+    id: "2",
+    title: "Valor das Cartas",
+    desc: "Do 4 até o 3, veja a ordem de força.",
+    suit: "♥️",
+    color: "#e74c3c",
+  },
+  {
+    id: "3",
+    title: "Como pedir Truco",
+    desc: "Aumente a aposta e pressione os adversários!",
+    suit: "♦️",
+    color: "#e74c3c",
+  },
+];
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.containerCard}>
+      <Carousel
+        width={width * 0.85}
+        height={600}
+        data={slides}
+        loop={false}
+        mode={"parallax"}
+        modeConfig={{
+          parallaxScrollingScale: 0.8,
+          parallaxScrollingOffset: 100,
+        }}
+        scrollAnimationDuration={800}
+        renderItem={({ item, index }) => (
+          <View style={[styles.card, { borderColor: item.color }]}>
+            <View style={[styles.corner, styles.topLeft]}>
+              <Text style={[styles.cornerText, { color: item.color }]}>
+                {index + 1}
+              </Text>
+              <Text style={[styles.suitText, { color: item.color }]}>
+                {item.suit}
+              </Text>
+            </View>
+
+            <View style={[styles.bottomRightCorner]}>
+              <Text
+                style={[
+                  styles.suitText,
+                  styles.inverted,
+                  { color: item.color },
+                ]}
+              >
+                {item.suit}
+              </Text>
+              <Text
+                style={[
+                  styles.cornerText,
+                  styles.inverted,
+                  { color: item.color },
+                ]}
+              >
+                {index + 1}
+              </Text>
+            </View>
+
+            <View style={styles.cardContent}>
+              <Text style={[styles.suitCenter, { color: item.color }]}>
+                {item.suit}
+              </Text>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.desc}>{item.desc}</Text>
+            </View>
+
+            <View style={styles.decorativePattern}>
+              {[...Array(4)].map((_, i) => (
+                <Text
+                  key={i}
+                  style={[styles.patternSuit, { color: item.color }]}
+                >
+                  {item.suit}
+                </Text>
+              ))}
+            </View>
+          </View>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  containerCard: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0f4c3a",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    height: 580,
+    width: "100%",
+    marginHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    position: "relative",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
+  corner: {
+    position: "absolute",
+    width: 40,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  topLeft: {
+    top: 10,
+    left: 10,
+  },
+  bottomRight: {
+    bottom: 10,
+    right: 10,
+  },
+  bottomRightCorner: {
+    position: "absolute",
+    width: 40,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    bottom: 10,
+    right: 10,
+  },
+  inverted: {
+    transform: [{ rotate: "180deg" }],
+  },
+  cornerText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    lineHeight: 20,
+  },
+  suitText: {
+    fontSize: 16,
+    lineHeight: 18,
+  },
+  cardContent: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 40,
+    zIndex: 1,
+  },
+  suitCenter: {
+    fontSize: 60,
+    marginBottom: 20,
+    opacity: 0.8,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 15,
+    textAlign: "center",
+    color: "#2c3e50",
+  },
+  desc: {
+    fontSize: 16,
+    textAlign: "center",
+    lineHeight: 22,
+    color: "#34495e",
+  },
+  decorativePattern: {
+    position: "absolute",
+    top: 0,
     left: 0,
-    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignContent: "space-around",
+    opacity: 0.05,
+    zIndex: 0,
+    padding: 20,
+  },
+  patternSuit: {
+    fontSize: 40,
+    margin: 20,
   },
 });
